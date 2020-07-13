@@ -1,12 +1,11 @@
 import React from 'react'
 
-var i = -1;
+
 
 function Item(props){
 
    let checked = (e) => {
      let ele = e.target;  
-     
         ele.parentElement.classList.toggle("done");
     }
 
@@ -45,7 +44,7 @@ function Item(props){
     return (
         
        <>
-       <li onClick={SelectItem} data-desc={props.item.description} data-title={props.item.name} data-id = {props.state.items.indexOf(props.item)}> 
+       <li onClick={SelectItem} data-desc={props.item.description} data-title={props.item.name} data-id = {props.id}> 
             <span> {props.item.name} </span>
             <input type="checkbox" onClick={checked}  />  
         </li>

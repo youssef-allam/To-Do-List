@@ -18,7 +18,7 @@ class App extends React.Component{
     }
 
     this.list = this.state.items.map( singlitem =>{
-      return ( <Item item= {singlitem} key={Math.random()} state ={this.state}/>)
+      return ( <Item item= {singlitem} key={Math.random()} state ={this.state} id={this.state.items.indexOf(singlitem)}/>)
     })
 
     this.handleChange = (e) =>{
@@ -39,7 +39,7 @@ class App extends React.Component{
         let obj = {name: value , description: " " };
         let items =  this.state.items;
         items.push(obj);
-       
+        
         this.setState({
          items,
           current : ""
@@ -59,6 +59,9 @@ class App extends React.Component{
       
     }
 
+    this.handleDelete= (index) => {
+      console.log("CAT")
+    }
    
 
   }

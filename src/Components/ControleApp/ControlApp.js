@@ -1,7 +1,5 @@
 import React from "react"
-import Item from "./item"
 
-// the Selected ITem from item.js file 
 
 
 
@@ -13,15 +11,11 @@ class ControlApp extends React.Component {
       
     }
 
-    
-   
-
     render(){
         return (
             <div className="Control-App">
                     <ul className="list-container"> 
                         {this.props.list}
-                        
                     </ul>
 
                     <aside>
@@ -47,32 +41,35 @@ function Edit(proof , items ){
     const listItems = document.getElementsByTagName('li');    
      const ele = document.getElementsByClassName("selected")[0];
      const desc = document.getElementsByClassName("desc")[0];
-     const title = document.getElementsByClassName("title")[0];
+     
+    if(ele){
 
-     if(proof === "Desc" ){
 
-       let c = prompt("write description" );
-        ele.setAttribute("data-desc" , c );
+            if(proof === "Desc" ){
 
-        desc.innerHTML= ele.getAttribute("data-desc");
+            let c = prompt("write description" );
+                ele.setAttribute("data-desc" , c );
 
-     }else if(proof === "Edit"){
-        for (let i = 0; i < listItems.length; i++) {
-            listItems[i].firstElementChild.setAttribute("contenteditable" , false);
+                desc.innerHTML= ele.getAttribute("data-desc");
+
+            }else if(proof === "Edit"){
+                for (let i = 0; i < listItems.length; i++) {
+                    listItems[i].firstElementChild.setAttribute("contenteditable" , false);
+                }
+                
+                ele.firstElementChild.setAttribute("contenteditable" , true);
+            
+                
+            }else{
+
+                let index = ele.getAttribute("data-id");
+                items.splice(index,1);
+                
+                ele.classList.add("Hide");
+            }
+        }else{
+            alert("select item to manage it");
         }
-        
-        ele.firstElementChild.setAttribute("contenteditable" , true);
-       
-        
-     }else{
-       let vOfDesc =  ele.getAttribute("data-desc");
-        let vOfTitle = ele.getAttribute("data-title");
-        let index = ele.getAttribute("data-id");
-        items.splice(index,1);
-        
-       ele.classList.add("Hide");
-     }
-
     
 }
 
