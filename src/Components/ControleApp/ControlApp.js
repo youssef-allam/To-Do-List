@@ -4,24 +4,66 @@ import React from "react"
 
 
 
-class ControlApp extends React.Component {
-    constructor(props){
-        super();
-        this.props = props;
-      
-    }
+function ControlApp(props){
 
-    render(){
-        return (
-            <div className="Control-App">
+    let checked = (e) => {
+        let ele = e.target;  
+           ele.parentElement.classList.toggle("done");
+       }
+   
+    /////////////////////////////////////////////////////// 
+    let SelectItem = () => {
+         const items = document.getElementsByTagName('li');
+         const desc = document.getElementsByClassName("desc")[0];
+         const title = document.getElementsByClassName("title")[0];
+            
+            for (let i = 0; i < items.length; i++) {
+               
+               items[i].onclick = function() {
+               for (let i = 0; i < items.length; i++) {
+                  items[i].classList.remove("selected");
+               }
+               desc.innerHTML= this.getAttribute("data-desc");
+              
+               this.classList.toggle("selected");
+               
+               let value = this.firstElementChild.textContent
+           
+               this.setAttribute("data-title" , value);
+               
+               title.innerHTML = this.getAttribute("data-title");
+               
+                            
+              
+               }
+               
+            }
+      }
+
+    /////////////////////////////////////////////////
+     
+        
+     return (
+           <div className="Control-App">
                     <ul className="list-container"> 
-                        {this.props.list}
+                    
+                        {
+                          
+                            props.items.map(singleItem =>  
+                                <li onClick={SelectItem} data-desc={singleItem.description} data-title={singleItem.name} data-id = {props.items.indexOf(singleItem)} > 
+                                <span> {singleItem.name} </span>
+                                <input type="checkbox" onClick={checked}  />  
+                                </li>
+                            )
+                        }
+                            
+
                     </ul>
 
                     <aside>
-                        <button onClick= {() => Edit("Desc", this.props.items)}> Add descrip :) </button>
-                        <button onClick= {() => Edit("Edit" ,this.props.items)}> Edit  0.o </button>
-                        <button onClick= {() => Edit("Del" ,this.props.items )}> Delete :( </button>
+                        <button onClick= {() => props.Edit("Desc", props.items)}> Add descrip :) </button>
+                        <button onClick= {() => props.Edit("Edit" ,props.items)}> Edit  0.o </button>
+                        <button onClick= {() => props.Edit("Del" ,props.items )}> Delete :( </button>
                     </aside>
 
                     <div className="description">
@@ -36,42 +78,7 @@ class ControlApp extends React.Component {
             </div>
         )
     }
-}
-function Edit(proof , items ){
-    const listItems = document.getElementsByTagName('li');    
-     const ele = document.getElementsByClassName("selected")[0];
-     const desc = document.getElementsByClassName("desc")[0];
-     
-    if(ele){
 
-
-            if(proof === "Desc" ){
-
-            let c = prompt("write description" );
-                ele.setAttribute("data-desc" , c );
-
-                desc.innerHTML= ele.getAttribute("data-desc");
-
-            }else if(proof === "Edit"){
-                for (let i = 0; i < listItems.length; i++) {
-                    listItems[i].firstElementChild.setAttribute("contenteditable" , false);
-                }
-                
-                ele.firstElementChild.setAttribute("contenteditable" , true);
-            
-                
-            }else{
-
-                let index = ele.getAttribute("data-id");
-                items.splice(index,1);
-                
-                ele.classList.add("Hide");
-            }
-        }else{
-            alert("select item to manage it");
-        }
-    
-}
 
 
 export default ControlApp 
